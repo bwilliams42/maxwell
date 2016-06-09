@@ -39,6 +39,8 @@ public class MaxwellConfig extends AbstractConfig {
 	public BinlogPosition initPosition;
 	public boolean replayMode;
 
+	public MaxwellDecryptionClassLoader decryptor;
+	
 	public MaxwellConfig() { // argv is only null in tests
 		this.kafkaProperties = new Properties();
 		this.replayMode = false;
@@ -65,6 +67,8 @@ public class MaxwellConfig extends AbstractConfig {
 
 	protected OptionParser buildOptionParser() {
 		final OptionParser parser = new OptionParser();
+		
+		parser.accepts("decrytpion_class", "class to decrypt passwords").withOptionalArg();
 		parser.accepts( "config", "location of config file" ).withRequiredArg();
 		parser.accepts( "log_level", "log level, one of DEBUG|INFO|WARN|ERROR" ).withRequiredArg();
 

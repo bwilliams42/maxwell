@@ -11,6 +11,8 @@ public class MaxwellMysqlConfig {
 	public Integer port;
 	public String user;
 	public String password;
+	private MaxwellDecryptionClassLoader decryptionClassLoader;
+	private boolean decrypt = false;
 
 	public MaxwellMysqlConfig() {
 		this.host = null;
@@ -29,7 +31,12 @@ public class MaxwellMysqlConfig {
 	public void parseOptions( String prefix, OptionSet options) {
 		if ( options.has(prefix + "host"))
 			this.host = (String) options.valueOf(prefix + "host");
-		if ( options.has(prefix + "password"))
+		if ( options.has("decryption_class")) {
+			decryptionClassLoader = new MaxwellDecryptionClassLoader();
+		}
+
+		if ( options.has(prefix + "password") && this.decrypt )
+			decryptionClassLoader.invokeDecrypt((String) options.valueOf("decryption_class"));
 			this.password = (String) options.valueOf(prefix + "password");
 		if ( options.has(prefix + "user"))
 			this.user = (String) options.valueOf(prefix + "user");
