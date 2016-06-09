@@ -92,7 +92,7 @@ public class MaxwellReplicator extends RunLoopProcess {
 	}
 
 	@Override
-	protected void beforeStart() throws Exception {
+	public void beforeStart() throws Exception {
 		try {
 			this.replicator.start();
 		} catch ( TransportException e ) {
@@ -124,7 +124,7 @@ public class MaxwellReplicator extends RunLoopProcess {
 	}
 
 	@Override
-	protected void beforeStop() throws Exception {
+	public void beforeStop() throws Exception {
 		this.binlogEventListener.stop();
 		this.replicator.stop(5, TimeUnit.SECONDS);
 	}
